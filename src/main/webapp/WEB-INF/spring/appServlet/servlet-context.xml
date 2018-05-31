@@ -16,10 +16,10 @@
 	<mvc:resources location="/" mapping="/resources/**"/>
 	
 	<mvc:view-controller path="/index.jsp" />
-	<bean
-		class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-		<property ref="flowRegistry" name="flowRegistry"></property>
-	</bean>
+<!-- 	<bean -->
+<!-- 		class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping"> -->
+<!-- 		<property ref="flowRegistry" name="flowRegistry"></property> -->
+<!-- 	</bean> -->
 	<bean
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"
@@ -29,8 +29,8 @@
 		<property name="suffix" value=".xhtml"></property>
 	</bean>
 	
-	<bean
-		class="org.springframework.faces.webflow.JsfFlowHandlerAdapter">
-		<property name="flowExecutor" ref="flowExecutor"></property>
-	</bean>
+<!-- 	<bean -->
+<!-- 		class="org.springframework.faces.webflow.JsfFlowHandlerAdapter"> -->
+<!-- 		<property name="flowExecutor" ref="flowExecutor"></property> -->
+<!-- 	</bean> -->
 </beans>

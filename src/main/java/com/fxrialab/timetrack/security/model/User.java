@@ -1,19 +1,25 @@
 package com.fxrialab.timetrack.security.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import javax.persistence.*;
 
 /**
  * Created by Minh T. on 5/18/2018.
  */
 @Entity
-public class User {
-    private long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User extends AbstractPersistable<Long> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String username;
     private String password;
+
+    @javax.validation.constraints.Email
+    private String email;
     private String role;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String salt;
 
     public String getSalt() {
@@ -24,13 +30,11 @@ public class User {
         this.salt = salt;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
