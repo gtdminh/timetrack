@@ -10,6 +10,12 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<spring.version>5.0.5.RELEASE</spring.version>
+		<spring.security.version>5.0.5.RELEASE</spring.security.version>
+		<spring.data.version></spring.data.version>
+		<hibernate.version>5.3.1.Final</hibernate.version>
+		<json.version>2.9.4</json.version>
+		<log4j.version>2.11.0</log4j.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -111,7 +117,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.3.1.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
@@ -139,20 +145,39 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+		<dependency>
+			<groupId></groupId>
+			<artifactId>tiles</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-framework-bom</artifactId>
-				<version>5.0.5.RELEASE</version>
+				<version>${spring.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-bom</artifactId>
-				<version>5.0.5.RELEASE</version>
+				<version>${spring.security.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -174,6 +199,11 @@
 					<scanIntervalSeconds>1000</scanIntervalSeconds>
 				</configuration>
 
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.0.0</version>
 			</plugin>
 		</plugins>
 	</build>

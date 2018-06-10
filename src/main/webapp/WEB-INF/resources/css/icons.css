@@ -1,0 +1,19 @@
+@font-face{
+  font-family: 'nucleo-icons';
+  src: url('/resources/font/nucleo-icons.eot');
+  src: url('/resources/font/nucleo-icons.eot') format('embedded-opentype'), url('/resources/font/nucleo-icons.woff2') format('woff2'), url('/resources/font/nucleo-icons.woff') format('woff'), url('/resources/font/nucleo-icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon{
+  display: inline-block;
+  font-family: 'nucleo-icons';
+  font-size: 14px;
+  line-height: 1;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+}
+

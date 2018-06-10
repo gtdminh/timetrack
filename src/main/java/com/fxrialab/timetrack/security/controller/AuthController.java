@@ -1,27 +1,24 @@
 package com.fxrialab.timetrack.security.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class AuthController{
-	private static Logger log = Logger.getLogger(AuthController.class.getName());
-	
-	@RequestMapping("/app/login")
-	public String login() {
-		log.info("login");
-		return "login";
-	}
-	
-	@RequestMapping("/app/logout")
-	public String logout() {
-		return "logout";
-	}
-	
-	@RequestMapping("/app/doLogin")
-	public void doLogin(Model m){
-		
-	}
+public class AuthController {
+    private static Logger log = LoggerFactory.getLogger(AuthController.class);
+
+    @RequestMapping("/login")
+    public String login(Model model) {
+        log.info("login");
+        return "login";
+    }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "logout";
+    }
+
 }

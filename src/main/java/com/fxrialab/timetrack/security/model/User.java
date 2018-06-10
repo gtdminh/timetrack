@@ -8,19 +8,32 @@ import javax.persistence.*;
  * Created by Minh T. on 5/18/2018.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "users")
 public class User extends AbstractPersistable<Long> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    public enum USER_STATUS{
+        USER_CREATED, USER_EMAIL_VERIFIED, USER_LOCKED, USER_ACTIVE;
+
+        public static USER_STATUS parse(final String status){
+            for(final USER_STATUS s : USER_STATUS.values()){
+                if(s.toString() == status) return s;
+            }
+
+            return null;
+        }
+    }
+
+
     private String username;
     private String password;
 
     @javax.validation.constraints.Email
     private String email;
-    private String role;
+    private String role= "USER";
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String salt;
+    @Column(name = "status")
+    private String status = USER_STATUS.USER_CREATED.toString();
 
     public String getSalt() {
         return salt;
@@ -30,12 +43,20 @@ public class User extends AbstractPersistable<Long> {
         this.salt = salt;
     }
 
-    public Long getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public USER_STATUS getStatus() {
+        return USER_STATUS.parse(status);
+    }
+
+    public void setStatus(USER_STATUS status) {
+        this.status = status.toString();
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
