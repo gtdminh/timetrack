@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="title" type="java.lang.String" required="true" %>
 <%@attribute name="css" type="java.lang.String" required="false" %>
+
 <html>
 <head>
     <title>Time-Tick - ${title}</title>
@@ -13,7 +14,7 @@
 
     <%-- bootstrap core --%>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />" type="text/css"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/paper-kit.css" />" type="text/css"/>
+    <%--<link rel="stylesheet" href="<c:url value="/resources/css/paper-kit.css" />" type="text/css"/>--%>
 
     <%-- font awesome --%>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'/>

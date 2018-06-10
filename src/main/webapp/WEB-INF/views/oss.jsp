@@ -5,7 +5,7 @@
     double random  = Math.random()*10000;
     String css = "/resources/css/commons.css?v=" + random;
 %>
-<t:layout title="Home" css="<%=css%>">
+<t:layout title="Open Source" css="<%=css%>">
 <div class="container-fluid">
     BODY
 </div>

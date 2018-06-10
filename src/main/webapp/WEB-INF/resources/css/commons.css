@@ -1,3 +1,8 @@
+body{
+    min-height: 75rem;
+    margin-top: 4.5rem;
+}
+
 .time-navbar {
     background-color: #e3f2fd;
 }
@@ -5,10 +10,20 @@
 .time-logo {
     width: 24px;
     height: 24px;
+    vertical-align: middle;
 }
 
 .time-brand{
     font-family: "Montserrat";
     font-size: 2rem;
     color: #1761a0;
+}
+
+.navbar-brand span{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.navbar-nav{
+    margin-left: auto;
 }
