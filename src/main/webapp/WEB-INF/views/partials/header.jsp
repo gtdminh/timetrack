@@ -1,7 +1,12 @@
+<%@ page import="com.fxrialab.timetrack.utils.SecurityUtils" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" color-on-scroll="300">
+<%
+    String username  = SecurityContextHolder.getContext().getAuthentication().getName();
+%>
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light" color-on-scroll="300">
     <a class="navbar-brand text-primary" href="<c:url value="/home" />">
             <img src="<c:url value="/resources/img/sand-clock2.png" />" width="24" height="24" class="time-logo">
             <span>timetrack</span>
@@ -27,7 +32,24 @@
                 </li>
                 <li class="nav-item"><a href="/pages/pricing" class="nav-link">Pricing</a></li>
                 <li class="nav-item"><a href="/pages/oss" class="nav-link">Open Source</a></li>
-
+                <li class="nav-item dropdown">
+                <% if(SecurityUtils.hasRole("USER")) {%>
+                    <a href="#" class="nav-link dropdown-toggle" role="button" id="accountDropdown"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                        <%= username.toUpperCase()%>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledBy="accountDropdown">
+                        <div class="dropdown-menu-header">Account</div>
+                        <a href="/account/edit" class="dropdown-item">Edit</a>
+                        <a href="/logout" class="dropdown-item">SignOut</a>
+                    </div>
+                <% } else { %>
+                    <a href="/login" class="btn btn-outline-primary" role="button">
+                        <i class="fa fa-sign-in"></i> Sign In
+                    </a>
+                <% } %>
+                </li>
             </ul>
         </div>
 
