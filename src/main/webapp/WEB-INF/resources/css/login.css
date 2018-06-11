@@ -1,3 +1,4 @@
 body{
-    background: url('')
+    background: url('https://source.unsplash.com/800x600/?nature,water') #55acee no-repeat center center fixed;
+    background-size: cover;
 }

@@ -20,14 +20,22 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="featuresDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Features</a>
-                    <div class="dropdown-menu" aria-labelledBy="featuresDropdown">
-                        <a href="/pages/feature#overview" class="dropdown-item">Overview</a>
-                        <a href="/pages/feature#reporting" class="dropdown-item">Timesheet + Reports</a>
-                        <a href="/pages/feature#task-management" class="dropdown-item">Task Management</a>
-                        <a href="/pages/feature#resource-plan" class="dropdown-item">Resource Planning</a>
-                        <a href="/pages/feature#invoice" class="dropdown-item">Invoice</a>
-                        <a href="/pages/feature#finance" class="dropdown-item">Finance Tracking</a>
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       Features
+                    </a>
+                    <%--<div class="dropdown-menu" aria-labelledBy="featuresDropdown">--%>
+                        <%--<a href="/pages/feature#overview" class="dropdown-item">Overview</a>--%>
+                        <%--<a href="/pages/feature#reporting" class="dropdown-item">Timesheet + Reports</a>--%>
+                        <%--<a href="/pages/feature#task-management" class="dropdown-item">Task Management</a>--%>
+                        <%--<a href="/pages/feature#resource-plan" class="dropdown-item">Resource Planning</a>--%>
+                        <%--<a href="/pages/feature#invoice" class="dropdown-item">Invoice</a>--%>
+                        <%--<a href="/pages/feature#finance" class="dropdown-item">Finance Tracking</a>--%>
+                    <%--</div>--%>
+                    <div class="dropdown-menu" aria-labelledby="featuresDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>
                 <li class="nav-item"><a href="/pages/pricing" class="nav-link">Pricing</a></li>
