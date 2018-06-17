@@ -160,10 +160,6 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${json.version}</version>
 		</dependency>
-		<dependency>
-			<groupId></groupId>
-			<artifactId>tiles</artifactId>
-		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

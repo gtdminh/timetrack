@@ -16,6 +16,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 import javax.sql.DataSource;
 
@@ -30,13 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public UserService userService;
 
-	@Bean
-	public PasswordEncoder passwordEncoder(){
-		PasswordEncoder encoder = new Pbkdf2PasswordEncoder("timetrack_secret");
-
-		return encoder;
-	}
-
 	@Autowired
 	private CustomAuthenticationProvider customAuthProvider;
 	
@@ -45,32 +42,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth
 			.authenticationProvider(customAuthProvider);
 //			.inMemoryAuthentication()
-//				.withUser("user").password("password").roles("USER").and()
+//				.withUser("gtdminh").password("password").authorities("ROLE_USER,ROLE_ADMIN");
 //				.withUser("admin").password("password").roles("USER", "ADMIN");
 
+	}
+
+	@Bean
+	public AbstractRememberMeServices getRememberService(){
+		JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+		repo.setDataSource(dataSource);
+		return new PersistentTokenBasedRememberMeServices("remember_me_key", userService, repo);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/signup","/about","/home*","/","/pages/*").permitAll()
+			.antMatchers("/home","/","/pages/**","/app/**","/auth/**").permitAll()
 			.antMatchers("/admin/**").hasRole("ADMIN")
-			.anyRequest().authenticated()
+			.anyRequest().hasRole("USER")
 			.and()
 		.formLogin()
-			.loginPage("/login")
-			.failureForwardUrl("/login?error").permitAll()
-			//.successForwardUrl("/account")
+			.loginPage("/auth/login")
+			.failureUrl("/auth/login?error")
+			.defaultSuccessUrl("/app")
+			.permitAll()
 			.and()
 		.logout()
 			.logoutUrl("/logout")
 			.logoutSuccessUrl("/home")
-			.permitAll();
+			.permitAll()
+			.and()
+		.headers()
+			.and()
+		.rememberMe()
+			.rememberMeServices(getRememberService())
+		;
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.debug(true).ignoring().antMatchers("/resources/**");
+		web.debug(false).ignoring().antMatchers("/resources/**");
 	}
 }

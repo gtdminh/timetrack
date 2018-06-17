@@ -3,15 +3,22 @@ package com.fxrialab.timetrack.security.persistence.impl;
 import com.fxrialab.timetrack.security.model.User;
 import com.fxrialab.timetrack.security.persistence.UserService;
 import com.fxrialab.timetrack.security.persistence.dao.IUserDAO;
+import com.fxrialab.timetrack.utils.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.security.util.Password;
 
+import javax.inject.Inject;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +35,6 @@ public class UserServiceImpl implements UserService {
 
     private IUserDAO userDAO;
 
-
     @Override
     public @Nullable
     User findByUsernameOrEmail(String search) {
@@ -41,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public @Nullable User findById(String id) {
+    public @Nullable User findById(Long id) {
         Optional<User> res = userDAO.findById(id);
         return res.orElse(null);
     }
@@ -54,29 +60,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers(Pageable page) {
+    public List<User> get(Pageable page) {
         Page<User> res = userDAO.findAll(page);
 
         return res.getContent();
     }
 
     @Override
-    public void removeUser(User user) {
+    public void remove(User user) {
         userDAO.delete(user);
     }
 
     @Override
-    public void removeUser(String id) {
+    public void remove(Long id) {
         userDAO.deleteById(id);
     }
 
     @Override
-    public User saveUser(User user) {
+    public User save(User user) {
         return userDAO.save(user);
     }
 
     @Override
-    public User create(User user) {
+    public User create(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        if(user.getSalt() == ""){
+            user.setSalt(SecurityUtils.generateSalt());
+            user.setPassword(SecurityUtils.hashPassword(user.getPassword(), user.getSalt()));
+        }
+
         return userDAO.save(user);
     }
 

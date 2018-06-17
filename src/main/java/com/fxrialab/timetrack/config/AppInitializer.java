@@ -21,13 +21,13 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         return new ApplicationContextInitializer<?>[]{new RootContextInitializer()};
     }
 
-    @Override
-    protected WebApplicationContext createServletApplicationContext() {
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(WebConfig.class);
-
-        return context;
-    }
+//    @Override
+//    protected WebApplicationContext createServletApplicationContext() {
+//        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+//        context.register(WebConfig.class);
+//
+//        return context;
+//    }
 
     @Override
     protected String[] getServletMappings() {
@@ -52,23 +52,23 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     }
 
 
-    @Override
-    protected void registerContextLoaderListener(ServletContext servletContext) {
-        super.registerContextLoaderListener(servletContext);
-        ServletRegistration.Dynamic servlet = servletContext.addServlet("faces_servlet", FacesServlet.class);
-        servlet.addMapping("*.xhtml");
-        servlet.setLoadOnStartup(1);
-
-        servletContext.setInitParameter("javax.faces.FACELETS_LIBRARIES", "/WEB-INF/springSecurity.taglib.xml");
-        servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "1");
-        servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
-        servletContext.setInitParameter("javax.faces.THEME", "bootstrap");
-        servletContext.setInitParameter("primefaces.UPLOADER", "commons");
-    }
+//    @Override
+//    protected void registerContextLoaderListener(ServletContext servletContext) {
+//        super.registerContextLoaderListener(servletContext);
+//        ServletRegistration.Dynamic servlet = servletContext.addServlet("faces_servlet", FacesServlet.class);
+//        servlet.addMapping("*.xhtml");
+//        servlet.setLoadOnStartup(1);
+//
+//        servletContext.setInitParameter("javax.faces.FACELETS_LIBRARIES", "/WEB-INF/springSecurity.taglib.xml");
+//        servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "1");
+//        servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
+//        servletContext.setInitParameter("javax.faces.THEME", "bootstrap");
+//        servletContext.setInitParameter("primefaces.UPLOADER", "commons");
+//    }
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{AppRootConfig.class, SecurityConfig.class, PersistenceConfig.class};
+        return new Class[]{AppRootConfig.class};
     }
 
     @Override

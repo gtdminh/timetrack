@@ -3,6 +3,7 @@ package com.fxrialab.timetrack.security.model;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Minh T. on 5/18/2018.
@@ -23,17 +24,30 @@ public class User extends AbstractPersistable<Long> {
         }
     }
 
-
+    @Basic
     private String username;
+    @Column(length = 1024)
     private String password;
 
     @javax.validation.constraints.Email
+    @Column(length = 512)
     private String email;
-    private String role= "USER";
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String role= "ROLE_USER";
     private String salt;
     @Column(name = "status")
     private String status = USER_STATUS.USER_CREATED.toString();
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdon;
+
+    public Date getCreatedon() {
+        return createdon;
+    }
+
+    public void setCreatedon(Date createdon) {
+        this.createdon = createdon;
+    }
 
     public String getSalt() {
         return salt;

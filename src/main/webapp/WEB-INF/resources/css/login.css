@@ -1,4 +1,17 @@
 body{
-    background: url('https://source.unsplash.com/800x600/?nature,water') #55acee no-repeat center center fixed;
-    background-size: cover;
+    height:100%;
+    align-items: center;
+    vertical-align: middle;
+    display: flex;
+}
+
+form{
+    width:100%;
+    max-width: 300px;
+    margin:auto;
+    padding:10px;
+}
+
+form.form-control{
+    box-sizing:border-box;
 }

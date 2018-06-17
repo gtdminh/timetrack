@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface IUserDAO extends JpaRepository<User, String> {
+public interface IUserDAO extends JpaRepository<User, Long> {
     public @Nullable User findByUsernameAndPassword(@Param("username") String userName,@Param("password") String hash);
     public @Nullable User findByUsernameOrEmail(String username, String email);
     public @Nullable User findByEmail(String email);
