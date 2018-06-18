@@ -27,3 +27,21 @@ body{
 .navbar-nav{
     margin-left: auto;
 }
+
+#sidebar-wrapper
+{
+    z-index: 1;
+    width:0;
+    height:100%;
+    position: absolute;
+}
+
+.sidebar-nav
+{
+
+
+}
+
+app-root{
+
+}
