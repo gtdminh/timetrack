@@ -56,6 +56,7 @@
 });</script>
 <script>
     $(function () {
+        debugger;
         $('form').submit(function (event) {
             event.preventDefault();
 

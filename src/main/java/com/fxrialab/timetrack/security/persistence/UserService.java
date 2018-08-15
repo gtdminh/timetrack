@@ -15,6 +15,8 @@ public interface UserService extends UserDetailsService {
     public User findByUsernameOrEmail(String search);
     public User findByEmail(String email);
     public User findById(Long id);
+    public User registerConfirm(String code);
+    public User createInactivatedUser(String email);
     public List<User> findByRole(String role, Pageable page);
     public List<User> get(Pageable page);
 

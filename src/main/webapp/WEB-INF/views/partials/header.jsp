@@ -53,8 +53,11 @@
                         <a href="/logout" class="dropdown-item">SignOut</a>
                     </div>
                 <% } else { %>
-                    <a href="/login" class="btn btn-outline-primary" role="button">
+                    <a href="/auth/login" class="btn btn-outline-primary" role="button">
                         <i class="fa fa-sign-in"></i> Sign In
+                    </a>
+                    <a href="/auth/signup" class="btn btn-outline-primary" role="button">
+                        <i class="fa fa-sign-in"></i> Sign Up
                     </a>
                 <% } %>
                 </li>

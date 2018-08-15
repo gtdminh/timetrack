@@ -12,17 +12,19 @@ import java.util.Date;
 @Table(name = "users")
 public class User extends AbstractPersistable<Long> {
 
-    public enum USER_STATUS{
-        USER_CREATED, USER_EMAIL_VERIFIED, USER_LOCKED, USER_ACTIVE;
+    public enum USER_STATUS {
+        USER_CREATED, USER_EMAIL_VERIFYING, USER_EMAIL_VERIFIED, USER_LOCKED, USER_ACTIVE;
 
-        public static USER_STATUS parse(final String status){
-            for(final USER_STATUS s : USER_STATUS.values()){
-                if(s.toString() == status) return s;
+        public static USER_STATUS parse(final String status) {
+            for (final USER_STATUS s : USER_STATUS.values()) {
+                if (s.toString() == status) return s;
             }
 
             return null;
         }
     }
+
+
 
     @Basic
     private String username;
@@ -40,6 +42,9 @@ public class User extends AbstractPersistable<Long> {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdon;
+
+    @Column(length = 512)
+    private String activationCode;
 
     public Date getCreatedon() {
         return createdon;
@@ -95,5 +100,13 @@ public class User extends AbstractPersistable<Long> {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 }

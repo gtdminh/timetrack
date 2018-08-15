@@ -19,9 +19,7 @@ import sun.security.util.Password;
 import javax.inject.Inject;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Minh T. on 6/1/2018.
@@ -50,6 +48,23 @@ public class UserServiceImpl implements UserService {
     public @Nullable User findById(Long id) {
         Optional<User> res = userDAO.findById(id);
         return res.orElse(null);
+    }
+
+    @Override
+    public @Nullable User registerConfirm(String code){
+        return userDAO.findByActivationCode(code);
+    }
+
+    @Override
+    @Transactional
+    public @Nullable User createInactivatedUser(String email){
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setStatus(User.USER_STATUS.USER_EMAIL_VERIFYING);
+        newUser.setActivationCode(UUID.randomUUID().toString());
+        newUser.setCreatedon(new Date());
+        userDAO.save(newUser);
+        return newUser;
     }
 
     @Override

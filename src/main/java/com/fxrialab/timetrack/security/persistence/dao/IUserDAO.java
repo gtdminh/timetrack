@@ -17,6 +17,7 @@ public interface IUserDAO extends JpaRepository<User, Long> {
     public @Nullable User findByUsernameAndPassword(@Param("username") String userName,@Param("password") String hash);
     public @Nullable User findByUsernameOrEmail(String username, String email);
     public @Nullable User findByEmail(String email);
+    public @Nullable User findByActivationCode(String activationCode);
     public Page<User> findByRole(String role, Pageable page);
 
 }
