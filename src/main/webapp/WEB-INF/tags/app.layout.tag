@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="title" type="java.lang.String" required="true" %>
 <%
-    String path = request.getPathInfo();
-    String appName = path.split("/")[1];
+    //String path = request.getPathInfo();
+    String appName = "app";//path.split("/")[1];
 %>
 <html>
 <head>
@@ -25,17 +25,6 @@
 
 </head>
 <body>
-<div class="container-fluid">
-
-    <nav id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-
-        </ul>
-    </nav>
-    <app-root class="app-wrapper">
-        <i class="fa fa-spin fa-spinner"></i>
-    </app-root>
-</div>
 <jsp:doBody/>
 <script type="text/javascript" src="<c:url value="/resources/<%=appName%>/runtime.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/<%=appName%>/polyfills.js"/>"></script>

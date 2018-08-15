@@ -539,7 +539,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\data\dropbox2\java\timetrack\src\main\js\timesheet\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! E:\data\dropbox2\java\timetrack\src\main\js\src\styles.css */"./src/styles.css");
 
 
 /***/ })
