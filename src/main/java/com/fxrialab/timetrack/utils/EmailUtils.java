@@ -1,6 +1,6 @@
 package com.fxrialab.timetrack.utils;
 
-import com.fxrialab.timetrack.security.model.User;
+import com.fxrialab.timetrack.model.security.User;
 
 public class EmailUtils {
 

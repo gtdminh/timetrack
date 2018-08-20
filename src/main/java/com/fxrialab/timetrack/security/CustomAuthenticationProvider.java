@@ -1,7 +1,7 @@
 package com.fxrialab.timetrack.security;
 
-import com.fxrialab.timetrack.security.model.User;
-import com.fxrialab.timetrack.security.persistence.UserService;
+import com.fxrialab.timetrack.model.security.User;
+import com.fxrialab.timetrack.service.intf.security.UserService;
 import com.fxrialab.timetrack.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

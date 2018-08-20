@@ -1,14 +1,10 @@
 package com.fxrialab.timetrack.model;
 
-import com.fxrialab.timetrack.security.model.User;
-import org.hibernate.annotations.Type;
+import com.fxrialab.timetrack.model.security.User;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Minh T. on 6/11/2018.

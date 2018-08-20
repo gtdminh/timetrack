@@ -64,12 +64,12 @@
                 data: {email: $('#inputEmail').val()}
             })
             .done(function (data) {
-                if (data == "success"){
+                if (data['code'] == "SUCCESS"){
                     window.location.href = '/auth/checkemail';
                 }
-                else if (data == "email_existing"){
+                else if (data['code'] == "EMAIL_EXISTING"){
                     debugger;
-                    $('.result-message').append('Your inputted email is existing.');
+                    $('.result-message').text('Your inputted email is existing.');
                 }
             })
             .fail(function (e) {

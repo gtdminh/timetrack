@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@ComponentScan(basePackages = {"com.fxrialab.timetrack.services", "com.fxrialab.timetrack.security.services"}, excludeFilters={@Filter(org.springframework.stereotype.Controller.class)})
+@ComponentScan(basePackages = {"com.fxrialab.timetrack.service"}, excludeFilters={@Filter(org.springframework.stereotype.Controller.class)})
 @Import({SecurityConfig.class, PersistenceConfig.class})
 public class AppRootConfig {
 

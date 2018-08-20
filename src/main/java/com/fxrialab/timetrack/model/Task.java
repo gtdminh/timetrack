@@ -1,6 +1,6 @@
 package com.fxrialab.timetrack.model;
 
-import com.fxrialab.timetrack.security.model.User;
+import com.fxrialab.timetrack.model.security.User;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;

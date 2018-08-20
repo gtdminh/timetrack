@@ -23,10 +23,10 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan({"com.fxrialab.timetrack.persistence","com.fxrialab.timetrack.security.persistence"})
+@ComponentScan({"com.fxrialab.timetrack.model","com.fxrialab.timetrack.model.security"})
 @PropertySource({"classpath:jpa.properties"})
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.fxrialab.timetrack.persistence.dao","com.fxrialab.timetrack.security.persistence.dao"})
+@EnableJpaRepositories(basePackages = {"com.fxrialab.timetrack.dao","com.fxrialab.timetrack.dao.security"})
 public class PersistenceConfig {
 	@Autowired
 	public Environment env;

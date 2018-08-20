@@ -18,7 +18,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@ComponentScan(basePackages = {"com.fxrialab.timetrack.controller","com.fxrialab.timetrack.security.controller"}, useDefaultFilters=false, includeFilters={@Filter(org.springframework.stereotype.Controller.class)})
+@ComponentScan(basePackages = {"com.fxrialab.timetrack.controller","com.fxrialab.timetrack.controller.security"}, useDefaultFilters=false, includeFilters={@Filter(org.springframework.stereotype.Controller.class)})
 public class WebConfig implements WebMvcConfigurer{
 
 	
