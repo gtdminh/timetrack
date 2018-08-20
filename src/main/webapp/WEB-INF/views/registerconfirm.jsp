@@ -37,7 +37,7 @@
                autofocus value="">
 
         <label for="inputPassword" class="sr-only">Your password:</label>
-        <input type="text" class="form-control" placeholder="Your full name" id="inputPassword" name="password" required
+        <input type="text" class="form-control" placeholder="Password" id="inputPassword" name="password" required
                value="">
     </div>
 
@@ -60,23 +60,32 @@
 <script>
     $(function () {
         debugger;
+    if ('<c:out value="${code}"/>' != 'OK'){
+            $('.form-group').hide();
+            $('.btn-group').hide();
+        }
+
         $('form').submit(function (event) {
             event.preventDefault();
             debugger;
             $.ajax({
                 method: 'POST',
-                url: '/auth/register?${_csrf.parameterName}=${_csrf.token}',
-                data: {email: $('#inputEmail').val()}
+                url: '/auth/registerNameAndPassword/<c:out value="${activationCode}"/>?${_csrf.parameterName}=${_csrf.token}',
+                data: {fullname: $('#inputFullname').val(), password: $('#inputPassword').val()}
             })
                 .done(function (data) {
-                    if (data['code'] == "SUCCESS"){
-                        window.location.href = '/auth/checkemail';
-                    }
-                    else if (data['code'] == "EMAIL_EXISTING"){
-                        debugger;
-                        $('.result-message').text('Your inputted email is existing.');
-                    }
-                })
+                    switch (data['code']) {
+                        case "SUCCESS":
+                            window.location.href = '/';
+                            break;
+                        case "USER_HAS_BEEN_ACTIVATED":
+                            $('.result-message').text('Your account has been activated.');
+                            break;
+                        case "NO_LEGAL_ACTIVATION_CODE":
+                            $('.result-message').text('This is no legal activation code.');
+                            break;
+                    }}
+                )
                 .fail(function (e) {
                     alert(e);
                 });

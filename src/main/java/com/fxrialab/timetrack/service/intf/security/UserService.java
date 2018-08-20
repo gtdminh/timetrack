@@ -19,6 +19,7 @@ public interface UserService extends UserDetailsService {
     public boolean registerConfirm(String code) throws ServiceException;
     public User checkUserWithActivationCode(String code) throws ServiceException;
     public User registerNewUser(String email) throws ServiceException;
+    public User registerNameAndPassword(String code,String fullname, String password) throws ServiceException;
     public List<User> findByRole(String role, Pageable page);
     public List<User> get(Pageable page);
 

@@ -35,6 +35,7 @@ public class User extends AbstractPersistable<Long> {
     @javax.validation.constraints.Email
     @Column(length = 512)
     private String email;
+    private String fullname;
     private String role= "ROLE_USER";
     private String salt;
     @Column(name = "status")
@@ -110,4 +111,13 @@ public class User extends AbstractPersistable<Long> {
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
     }
+
+    public String getFullname(){
+        return fullname;
+    }
+
+    public void setFullname(String fullname){
+        this.fullname = fullname;
+    }
+
 }

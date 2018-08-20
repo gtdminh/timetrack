@@ -76,6 +76,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User registerNameAndPassword(String code,String fullname, String password) throws ServiceException {
+        User user = userDAO.findByActivationCode(code);
+        if (user == null){
+            throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.NO_CONFIRMATION_CODE);
+        }
+        else if (!User.USER_STATUS.USER_EMAIL_VERIFYING.equals(user.getStatus())){
+            throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.NO_WAITING_FOR_CONFIRMATION);
+        }
+        user.setFullname(fullname);
+        user.setPassword(password);
+        user.setStatus(User.USER_STATUS.USER_ACTIVE);
+        userDAO.save(user);
+
+        return user;
+    }
+
+    @Override
     public @Nullable
     User registerNewUser(String email) throws ServiceException {
 

@@ -68,6 +68,7 @@ public class AuthController {
     public ModelAndView registerConfirm(@PathVariable("activationcode") String activationCode){
         ModelAndView model = new ModelAndView();
         model.setViewName("registerconfirm");
+        model.addObject("activationCode",activationCode);
         try{
             User user = userService.checkUserWithActivationCode(activationCode);
             model.addObject("code","OK");
@@ -89,21 +90,22 @@ public class AuthController {
         return model;
     }
 
-    @RequestMapping(value = "/registerNameAndPassword",method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/registerNameAndPassword/{activationcode}",
+            method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public RestResponse registerNameAndPassword(@PathVariable("activationcode") String activationCode
-            ,String email, String password){
+            ,@RequestParam("fullname") String fullname,@RequestParam("password") String password){
 
         try{
-            User newUser = userService.registerNewUser(email);
+            User newUser = userService.registerNameAndPassword(activationCode,fullname, password);
         }
         catch (ServiceException ex){
             switch (ex.getExceptionCode()){
                 case NO_CONFIRMATION_CODE:
                 case NO_WAITING_FOR_CONFIRMATION:
-                    return new RestResponse(ResponseCode.EMAIL_EXISTING);
+                    return new RestResponse(ResponseCode.NO_LEGAL_ACTIVATION_CODE);
                 case USER_HAS_BEEN_ACTIVATED:
-                    return new RestResponse(ResponseCode.EMAIL_EXISTING);
+                    return new RestResponse(ResponseCode.USER_HAS_BEEN_ACTIVATED);
             }
         }
 
