@@ -85,7 +85,17 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.NO_WAITING_FOR_CONFIRMATION);
         }
         user.setFullname(fullname);
-        user.setPassword(password);
+        user.setSalt("D7bc@AjYle7h9Zhy");
+        try{
+            user.setPassword(SecurityUtils.hashPassword(password,user.getSalt()));
+        }
+        catch (InvalidKeySpecException ex){
+            throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.INVALID_CREATE_PASSWORD);
+        }
+        catch (NoSuchAlgorithmException ex){
+            throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.INVALID_CREATE_PASSWORD);
+        }
+
         user.setStatus(User.USER_STATUS.USER_ACTIVE);
         userDAO.save(user);
 

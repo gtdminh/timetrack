@@ -76,13 +76,16 @@
                 .done(function (data) {
                     switch (data['code']) {
                         case "SUCCESS":
-                            window.location.href = '/';
+                            window.location.href = '../../..';
                             break;
                         case "USER_HAS_BEEN_ACTIVATED":
                             $('.result-message').text('Your account has been activated.');
                             break;
                         case "NO_LEGAL_ACTIVATION_CODE":
                             $('.result-message').text('This is no legal activation code.');
+                            break;
+                        case "UNEXPECTED_CREATING_USER_ISSUE":
+                            $('.result-message').text('There is a problem of creating user.');
                             break;
                     }}
                 )

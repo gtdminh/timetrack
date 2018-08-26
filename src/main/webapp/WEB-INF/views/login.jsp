@@ -71,6 +71,7 @@
                     const password = $('#inputPassword').val();
                     forge.pkcs5.pbkdf2(password, salt, iteration, hash_length, function(err, newHash){
                         const hex = forge.util.bytesToHex(newHash);
+                        debugger;
                         $('#inputPassword').val(hex);
                         $('form').off('submit').submit();
                     });

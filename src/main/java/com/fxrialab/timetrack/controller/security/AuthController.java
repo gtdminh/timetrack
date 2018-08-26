@@ -5,6 +5,7 @@ import com.fxrialab.timetrack.common.RestResponse;
 import com.fxrialab.timetrack.common.ServiceException;
 import com.fxrialab.timetrack.model.security.User;
 import com.fxrialab.timetrack.service.intf.MailService;
+import com.fxrialab.timetrack.service.intf.security.CaptchaService;
 import com.fxrialab.timetrack.service.intf.security.UserService;
 import com.fxrialab.timetrack.utils.SecurityUtils;
 import org.slf4j.Logger;
@@ -15,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +31,8 @@ public class AuthController {
     private UserService userService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private CaptchaService captchaService;
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -36,8 +42,33 @@ public class AuthController {
 
     @GetMapping("/signup")
     public String signup(){
-        return "signup";
+        return "signup/signup";
     }
+
+    @PostMapping("/signup")
+    public ModelAndView signupPost(String email){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("signup/robothumanverify");
+        mav.addObject("email",email);
+
+        return mav;
+    }
+
+    @PostMapping("/email-submit")
+    public ModelAndView emailSubmit(String email, HttpServletRequest request){
+        try{
+            String captchaResponse = request.getParameter("g-recaptcha-response");
+            String ip= InetAddress.getLocalHost().getHostAddress();
+            //String response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Le1RWwUAAAAAOt8G7RacJ_dkNzLIAOUJpsAjCMa&response=" + captchaResponse + "&remoteip=" + ip);
+        }
+        catch (UnknownHostException ex){
+            log.error(ex.toString());
+        }
+        return new ModelAndView();
+
+    }
+
+
 
     @RequestMapping(value = "/register",method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
@@ -59,12 +90,22 @@ public class AuthController {
         return new RestResponse(ResponseCode.SUCCESS);
     }
 
-    @GetMapping("/checkemail")
-    public String checkemail(){
-        return "checkemail";
+    @GetMapping("/robot-human-verify")
+    public String robotHumanVerify(){
+        return "signup/robothumanverify";
     }
 
-    @GetMapping("/registerconfirm/{activationcode}")
+    @PostMapping("/captcha-verify")
+    public String captchaVerify(){
+        return "signup/signupconfirm";
+    }
+
+    @GetMapping("/check-email")
+    public String checkemail(){
+        return "signup/checkemail";
+    }
+
+    @GetMapping("/register-confirm/{activationcode}")
     public ModelAndView registerConfirm(@PathVariable("activationcode") String activationCode){
         ModelAndView model = new ModelAndView();
         model.setViewName("registerconfirm");
@@ -90,7 +131,7 @@ public class AuthController {
         return model;
     }
 
-    @RequestMapping(value = "/registerNameAndPassword/{activationcode}",
+    @RequestMapping(value = "/register-name-and-password/{activationcode}",
             method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public RestResponse registerNameAndPassword(@PathVariable("activationcode") String activationCode
@@ -106,6 +147,8 @@ public class AuthController {
                     return new RestResponse(ResponseCode.NO_LEGAL_ACTIVATION_CODE);
                 case USER_HAS_BEEN_ACTIVATED:
                     return new RestResponse(ResponseCode.USER_HAS_BEEN_ACTIVATED);
+                case INVALID_CREATE_PASSWORD:
+                    return new RestResponse(ResponseCode.UNEXPECTED_CREATING_USER_ISSUE);
             }
         }
 
@@ -124,7 +167,6 @@ public class AuthController {
         User user = userService.findByUsernameOrEmail(username);
         if(user != null){
             map.put("salt", user.getSalt());
-
         }
         else{
             map.put("salt", SecurityUtils.generateSalt());
