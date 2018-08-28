@@ -56,15 +56,27 @@ public class AuthController {
 
     @PostMapping("/email-submit")
     public ModelAndView emailSubmit(String email, HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
         try{
             String captchaResponse = request.getParameter("g-recaptcha-response");
-            String ip= InetAddress.getLocalHost().getHostAddress();
-            //String response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Le1RWwUAAAAAOt8G7RacJ_dkNzLIAOUJpsAjCMa&response=" + captchaResponse + "&remoteip=" + ip);
+            if (captchaService.processResponse(captchaResponse)){
+                mav.setViewName("/signup/inputemailconfirm");
+            }
         }
-        catch (UnknownHostException ex){
-            log.error(ex.toString());
+        catch (ServiceException ex){
+            switch (ex.getExceptionCode()){
+                case RESPONSE_CONTAIN_INVALID_CHARACTERS:
+                case RECAPTCHA_NOT_SUCCESSFULLY_VALIDATED:
+                    mav.setViewName("/signup/signup");
+                    break;
+                case UNKNOWN_HOST_EXCEPTION:
+                    mav.setViewName("/signup/signup");
+                    log.error(ex.toString());
+                    break;
+            }
+
         }
-        return new ModelAndView();
+        return mav;
 
     }
 

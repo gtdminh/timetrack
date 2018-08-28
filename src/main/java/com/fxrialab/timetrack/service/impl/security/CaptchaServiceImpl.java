@@ -27,7 +27,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     private static Pattern RESPONSE_PATTERN = Pattern.compile("[A-Za-z0-9_-]+");
 
     @Override
-    public void processResponse(String response) throws ServiceException{
+    public boolean processResponse(String response) throws ServiceException{
         if(!responseSanityCheck(response)) {
             throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.RESPONSE_CONTAIN_INVALID_CHARACTERS,"Response contains invalid characters");
         }
@@ -40,14 +40,13 @@ public class CaptchaServiceImpl implements CaptchaService {
             if(!googleResponse.isSuccess()) {
                 throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.RESPONSE_CONTAIN_INVALID_CHARACTERS,"reCaptcha was not successfully validated");
             }
+            else{
+                return true;
+            }
         }
         catch (UnknownHostException ex){
             throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.UNKNOWN_HOST_EXCEPTION);
         }
-
-
-
-
     }
 
     private boolean responseSanityCheck(String response) {

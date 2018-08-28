@@ -11,6 +11,6 @@
     <title>Input Email Confirm</title>
 </head>
 <body>
-
+    A confirmation email has been sent to your address! please check and activate your account.
 </body>
 </html>
