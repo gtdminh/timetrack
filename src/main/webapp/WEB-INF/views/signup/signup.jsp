@@ -40,7 +40,7 @@
         <button class="btn btn-primary" type="submit">Sign Up</button>
     </div>
     <div class="result-message">
-
+        $(message)
     </div>
 
 </form>

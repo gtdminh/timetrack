@@ -60,6 +60,8 @@ public class AuthController {
         try{
             String captchaResponse = request.getParameter("g-recaptcha-response");
             if (captchaService.processResponse(captchaResponse)){
+                User newUser = userService.registerNewUser(email);
+                mailService.sendRegisterConfirmationEmail(email,newUser);
                 mav.setViewName("/signup/inputemailconfirm");
             }
         }
@@ -68,10 +70,20 @@ public class AuthController {
                 case RESPONSE_CONTAIN_INVALID_CHARACTERS:
                 case RECAPTCHA_NOT_SUCCESSFULLY_VALIDATED:
                     mav.setViewName("/signup/signup");
+                    mav.addObject("message","Invalid Captcha!");
                     break;
                 case UNKNOWN_HOST_EXCEPTION:
                     mav.setViewName("/signup/signup");
+                    mav.addObject("message","There is a problem with server, please contact admin for detail.");
                     log.error(ex.toString());
+                    break;
+                case USER_EXISTING:
+                    mav.setViewName("/signup/signup");
+                    mav.addObject("message","There is an existing email signed up.");
+                    break;
+                case SEND_MAIL_FAIL:
+                    mav.setViewName("/signup/signup");
+                    mav.addObject("message","There is a problem with sending mail.");
                     break;
             }
 

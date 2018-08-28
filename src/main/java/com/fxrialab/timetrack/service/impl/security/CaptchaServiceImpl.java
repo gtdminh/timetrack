@@ -54,11 +54,11 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
     private String getClientIP() throws UnknownHostException{
-        return InetAddress.getLocalHost().getHostAddress();
+        return captchaSettings.getSite();
     }
 
     private String getReCaptchaSecret(){
-        return "";
+        return captchaSettings.getSecret();
     }
 }
 

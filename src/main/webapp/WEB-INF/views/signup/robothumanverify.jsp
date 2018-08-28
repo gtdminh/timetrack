@@ -30,7 +30,7 @@
 </head>
 <body class="text-center bg-light">
 
-<form action="/auth/email-submit" name="inputNameAndPasswordForm" class="form-signup" method="post">
+<form action=<c:url value="/auth/email-submit?${_csrf.parameterName}=${_csrf.token}" /> name="inputNameAndPasswordForm" class="form-signup" method="post">
     <img src="/resources/img/logo.png" alt="" class="mb-4">
     <h1 class="h3 mb-3 font-weight-normal">Register Confirmation</h1>
     <div class="form-group">
