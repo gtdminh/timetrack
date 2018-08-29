@@ -30,16 +30,13 @@
 </head>
 <body class="text-center bg-light">
 
-<form action=<c:url value="/auth/email-submit?${_csrf.parameterName}=${_csrf.token}" /> name="inputNameAndPasswordForm" class="form-signup" method="post">
+<form action=<c:url value="/auth/email-submit" /> name="robotHumanVerifyForm" class="form-signup" method="post">
     <img src="/resources/img/logo.png" alt="" class="mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Register Confirmation</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+    <input type="hidden"  name="${_csrf.parameterName}"  value="${_csrf.token}">
     <div class="form-group">
         <input  type="hidden"  name="email" value="${email}" >
-        <div class="g-recaptcha" data-sitekey="6Le1RWwUAAAAALMNkuo_3IQJtzPlc5wZTknn9LSe"></div>
-    </div>
-
-    <div class="btn-group" role="group" aria-label="SignButtons">
-        <button class="btn btn-primary" type="submit">Sign Up</button>
+        <div class="g-recaptcha" data-callback="onSubmit" data-sitekey="6Le1RWwUAAAAALMNkuo_3IQJtzPlc5wZTknn9LSe"></div>
     </div>
     <div class="result-message">
 
@@ -54,6 +51,13 @@
 <script>$(document).ready(function () {
     $('body').bootstrapMaterialDesign();
 });</script>
+<script>
+
+    function onSubmit( token ) {
+        $("form").submit();
+    }
+
+</script>
 
 </body>
 </html>

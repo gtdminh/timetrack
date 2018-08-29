@@ -27,9 +27,10 @@
     <link href="<c:url value="/resources/css/login.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body class="text-center bg-light">
-<form action="<c:url value="/auth/signup?${_csrf.parameterName}=${_csrf.token}" />" name="signupForm" class="form-signup" method="post">
+<form action="<c:url value="/auth/signup" />" name="signupForm" class="form-signup" method="post">
     <img src="/resources/img/logo.png" alt="" class="mb-4">
     <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+    <input type="hidden"  name="${_csrf.parameterName}"  value="${_csrf.token}">
     <div class="form-group">
         <label for="inputEmail" class="sr-only">Email</label>
         <input type="email" class="form-control" placeholder="Email" id="inputEmail" name="email" required
@@ -40,7 +41,7 @@
         <button class="btn btn-primary" type="submit">Sign Up</button>
     </div>
     <div class="result-message">
-        $(message)
+        ${message}
     </div>
 
 </form>
@@ -51,33 +52,6 @@
 <script>$(document).ready(function () {
     $('body').bootstrapMaterialDesign();
 });</script>
-<script>
-    $(function () {
-        /*debugger;
-        $('form').submit(function (event) {
-            event.preventDefault();
-            debugger;
-            $.ajax({
-                method: 'POST',
-                url: '/auth/register?${_csrf.parameterName}=${_csrf.token}',
-                data: {email: $('#inputEmail').val()}
-            })
-            .done(function (data) {
-                if (data['code'] == "SUCCESS"){
-                    window.location.href = '/auth/checkemail';
-                }
-                else if (data['code'] == "EMAIL_EXISTING"){
-                    debugger;
-                    $('.result-message').text('Your inputted email is existing.');
-                }
-            })
-            .fail(function (e) {
-                alert(e);
-            });
 
-
-        });*/
-    });
-</script>
 </body>
 </html>

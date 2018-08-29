@@ -69,8 +69,9 @@ public class AuthController {
             switch (ex.getExceptionCode()){
                 case RESPONSE_CONTAIN_INVALID_CHARACTERS:
                 case RECAPTCHA_NOT_SUCCESSFULLY_VALIDATED:
-                    mav.setViewName("/signup/signup");
                     mav.addObject("message","Invalid Captcha!");
+                    mav.setViewName("/signup/signup");
+
                     break;
                 case UNKNOWN_HOST_EXCEPTION:
                     mav.setViewName("/signup/signup");
@@ -78,8 +79,9 @@ public class AuthController {
                     log.error(ex.toString());
                     break;
                 case USER_EXISTING:
-                    mav.setViewName("/signup/signup");
                     mav.addObject("message","There is an existing email signed up.");
+                    mav.setViewName("/signup/signup");
+
                     break;
                 case SEND_MAIL_FAIL:
                     mav.setViewName("/signup/signup");
