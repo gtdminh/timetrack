@@ -60,8 +60,8 @@ public class AuthController {
         try{
             String captchaResponse = request.getParameter("g-recaptcha-response");
             if (captchaService.processResponse(captchaResponse)){
-                User newUser = userService.registerNewUser(email);
-                mailService.sendRegisterConfirmationEmail(email,newUser);
+                //User newUser = userService.registerNewUser(email);
+                mailService.sendRegisterConfirmationEmail(email,new User());
                 mav.setViewName("/signup/inputemailconfirm");
             }
         }
