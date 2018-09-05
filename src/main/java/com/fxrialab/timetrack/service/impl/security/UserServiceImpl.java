@@ -76,7 +76,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerNameAndPassword(String code,String fullname, String password) throws ServiceException {
+    public User registerUserInformation(String code, String fullname, String password, String managingType, String projectType
+            ,String companyName, String conpanySize) throws ServiceException {
         User user = userDAO.findByActivationCode(code);
         if (user == null){
             throw new ServiceException(ServiceException.SERVICE_EXCEPTION_CODE.NO_CONFIRMATION_CODE);

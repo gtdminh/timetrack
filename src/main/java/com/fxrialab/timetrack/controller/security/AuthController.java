@@ -34,11 +34,42 @@ public class AuthController {
     @Autowired
     private CaptchaService captchaService;
 
+    /************* Login Section *************************/
+
+    /**
+     *
+     * @param model
+     * @return
+     */
     @RequestMapping("/login")
     public String login(Model model) {
         log.info("login");
         return "login";
     }
+
+
+    @GetMapping("/salt/{username}")
+    @ResponseBody
+    public Map<String, Object> getSalt(@PathVariable("username") String username)
+    {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("length", 256);
+        map.put("iteration",1000);
+        map.put("algorithm","Pbkdf2WithSha1");
+
+        User user = userService.findByUsernameOrEmail(username);
+        if(user != null){
+            map.put("salt", user.getSalt());
+        }
+        else{
+            map.put("salt", SecurityUtils.generateSalt());
+        }
+
+        return map;
+    }
+
+
+    /************* Sign up Section *************************/
 
     @GetMapping("/signup")
     public String signup(){
@@ -94,47 +125,15 @@ public class AuthController {
 
     }
 
-
-
-    @RequestMapping(value = "/register",method = RequestMethod.POST, produces = "application/json")
-    @ResponseBody
-    public RestResponse register(String email){
-
-        try{
-            User newUser = userService.registerNewUser(email);
-            mailService.sendRegisterConfirmationEmail(email,newUser);
-        }
-        catch (ServiceException ex){
-            switch (ex.getExceptionCode()){
-                case USER_EXISTING:
-                    return new RestResponse(ResponseCode.EMAIL_EXISTING);
-                case SEND_MAIL_FAIL:
-                    return new RestResponse(ResponseCode.SEND_MAIL_FAIL);
-            }
-        }
-
-        return new RestResponse(ResponseCode.SUCCESS);
-    }
-
     @GetMapping("/robot-human-verify")
     public String robotHumanVerify(){
         return "signup/robothumanverify";
     }
 
-    @PostMapping("/captcha-verify")
-    public String captchaVerify(){
-        return "signup/signupconfirm";
-    }
-
-    @GetMapping("/check-email")
-    public String checkemail(){
-        return "signup/checkemail";
-    }
-
-    @GetMapping("/register-confirm/{activationcode}")
+    @GetMapping("/do-activation/{activationcode}")
     public ModelAndView registerConfirm(@PathVariable("activationcode") String activationCode){
         ModelAndView model = new ModelAndView();
-        model.setViewName("registerconfirm");
+        model.setViewName("signup/informationconfirm");
         model.addObject("activationCode",activationCode);
         try{
             User user = userService.checkUserWithActivationCode(activationCode);
@@ -157,14 +156,20 @@ public class AuthController {
         return model;
     }
 
-    @RequestMapping(value = "/register-name-and-password/{activationcode}",
+    @RequestMapping(value = "/information-submit/{activationcode}",
             method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public RestResponse registerNameAndPassword(@PathVariable("activationcode") String activationCode
-            ,@RequestParam("fullname") String fullname,@RequestParam("password") String password){
+    public RestResponse informationSubmit(@PathVariable("activationcode") String activationCode, HttpServletRequest request) {
 
         try{
-            User newUser = userService.registerNameAndPassword(activationCode,fullname, password);
+            String managingType = request.getParameter("managingtype");
+            String projectType = request.getParameter("projecttype");
+            String fullname = request.getParameter("fullname");
+            String password = request.getParameter("password");
+            String companyName = request.getParameter("companyname");
+            String companySize = request.getParameter("companysize");
+            User newUser = userService.registerUserInformation(activationCode,fullname, password, managingType, projectType
+            ,companyName, companySize);
         }
         catch (ServiceException ex){
             switch (ex.getExceptionCode()){
@@ -181,23 +186,4 @@ public class AuthController {
         return new RestResponse(ResponseCode.SUCCESS);
     }
 
-    @GetMapping("/salt/{username}")
-    @ResponseBody
-    public Map<String, Object> getSalt(@PathVariable("username") String username)
-    {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("length", 256);
-        map.put("iteration",1000);
-        map.put("algorithm","Pbkdf2WithSha1");
-
-        User user = userService.findByUsernameOrEmail(username);
-        if(user != null){
-            map.put("salt", user.getSalt());
-        }
-        else{
-            map.put("salt", SecurityUtils.generateSalt());
-        }
-
-        return map;
-    }
 }

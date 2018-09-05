@@ -40,9 +40,15 @@
         <input type="checkbox" class="form-check-input" id="rememberCheckbox" value="remember-me">
         <label for="rememberCheckbox" class="form-check-label">Remember Me</label>
     </div>
+    <div>
+        <a href="/auth/password-recovery">Forgot Password?</a>
+    </div>
     <div class="btn-group" role="group" aria-label="SignButtons">
         <a href="/signup" class="btn btn-danger" role="button">Sign Up</a>
         <button class="btn btn-primary" type="submit">Sign In</button>
+    </div>
+    <div>
+        Don't have an account? <a href="/auth/signup">Sign up here</a>
     </div>
 
 </form>
