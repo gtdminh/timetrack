@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @ComponentScan(basePackages = {"com.fxrialab.timetrack.service"}, excludeFilters={@Filter(org.springframework.stereotype.Controller.class)})
-@Import({SecurityConfig.class, PersistenceConfig.class, MailConfig.class})
+@Import({SecurityConfig.class, PersistenceConfig.class})
 public class AppRootConfig {
 
     @Bean

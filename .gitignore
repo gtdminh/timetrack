@@ -7,3 +7,4 @@ target
 nb-*
 *.iml
 .tern*
+*.DS_Store
