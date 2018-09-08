@@ -1,11 +1,10 @@
 package com.fxrialab.timetrack.service.impl.security;
 
 import com.fxrialab.timetrack.common.ServiceException;
+import com.fxrialab.timetrack.dao.security.IUserDAO;
 import com.fxrialab.timetrack.model.security.User;
 import com.fxrialab.timetrack.service.intf.security.UserService;
-import com.fxrialab.timetrack.dao.security.IUserDAO;
 import com.fxrialab.timetrack.utils.SecurityUtils;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;

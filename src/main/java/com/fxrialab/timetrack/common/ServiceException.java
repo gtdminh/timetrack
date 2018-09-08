@@ -25,17 +25,17 @@ public class ServiceException extends Exception {
     }
 
 
-    public ServiceException(SERVICE_EXCEPTION_CODE code,String message) {
+    public ServiceException(SERVICE_EXCEPTION_CODE code, String message) {
         super(message);
         this.exceptionCode = code;
     }
 
-    public ServiceException(SERVICE_EXCEPTION_CODE code,Throwable cause) {
+    public ServiceException(SERVICE_EXCEPTION_CODE code, Throwable cause) {
         super(cause);
         this.exceptionCode = code;
     }
 
-    public ServiceException(SERVICE_EXCEPTION_CODE code,String message, Throwable cause) {
+    public ServiceException(SERVICE_EXCEPTION_CODE code, String message, Throwable cause) {
         super(message, cause);
         this.exceptionCode = code;
     }

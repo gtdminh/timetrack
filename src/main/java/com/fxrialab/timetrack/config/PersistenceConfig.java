@@ -10,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,8 +19,10 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.util.Properties;
 
 @Configuration
@@ -32,13 +35,8 @@ public class PersistenceConfig {
 	public Environment env;
 	
 	@Bean
-	public DataSource dataSource() {
-		HikariConfig cf = new HikariConfig();
-		cf.setUsername(env.getProperty("db.username"));
-		cf.setPassword(env.getProperty("db.password"));
-		cf.setJdbcUrl(env.getProperty("db.url"));
-		cf.setDriverClassName(env.getProperty("jpa.driver.classname"));
-		HikariDataSource ds = new HikariDataSource(cf);
+	public DataSource dataSource() throws NamingException {
+		DataSource ds = (DataSource) new JndiTemplate().lookup(env.getProperty("db.url"));
 
 		return ds;
 	}
@@ -55,10 +53,10 @@ public class PersistenceConfig {
 	}
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
 		LocalContainerEntityManagerFactoryBean manager = new LocalContainerEntityManagerFactoryBean();
-		manager.setPackagesToScan(new String[]{"com.fxrialab.timetrack.model", "com.fxrialab.timetrack.security.model"});
 		manager.setDataSource(dataSource());
+		manager.setPackagesToScan(new String[]{"com.fxrialab.timetrack.model", "com.fxrialab.timetrack.security.model"});
 		manager.setJpaVendorAdapter(jpaAdapter());
 		manager.setJpaProperties(jpaProps());
 

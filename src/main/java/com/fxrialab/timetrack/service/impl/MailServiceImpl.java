@@ -3,9 +3,6 @@ package com.fxrialab.timetrack.service.impl;
 import com.fxrialab.timetrack.common.ServiceException;
 import com.fxrialab.timetrack.model.security.User;
 import com.fxrialab.timetrack.service.intf.MailService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.mail.SimpleMailMessage;
-//import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service("mailService")
