@@ -45,7 +45,7 @@ public class SaltedPbkdf2Encoder implements PasswordEncoder {
 
         byte[] hash  = pbkdf2(password.toCharArray(), bytes, ITERATION, HASH_LENGTH);
 
-        return String.format("{0}:{1}:{2}",ITERATION,String.valueOf(Hex.encode(bytes)), String.valueOf(Hex.encode(hash)) );
+        return String.format("%d:%s:%s",ITERATION,String.valueOf(Hex.encode(bytes)), String.valueOf(Hex.encode(hash)) );
     }
 
     public String generateSalt()

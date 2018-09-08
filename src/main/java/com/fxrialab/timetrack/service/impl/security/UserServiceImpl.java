@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         return res.orElse(null);
     }
 
-    @Override
+    /*@Override
     public boolean registerConfirm(String code) throws ServiceException{
         User user = userDAO.findByActivationCode(code);
         if (user == null){
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
         user.setStatus(User.USER_STATUS.USER_ACTIVE);
         userDAO.save(user);
         return true;
-    }
+    }*/
 
     @Override
     public User checkUserWithActivationCode(String code) throws ServiceException{

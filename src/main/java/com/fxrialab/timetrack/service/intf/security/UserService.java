@@ -17,7 +17,7 @@ public interface UserService extends UserDetailsService {
     public User findByUsernameOrEmail(String search);
     public User findByEmail(String email);
     public User findById(Long id);
-    public boolean registerConfirm(String code) throws ServiceException;
+    //public boolean registerConfirm(String code) throws ServiceException;
     public User checkUserWithActivationCode(String code) throws ServiceException;
     public User registerNewUser(String email) throws ServiceException;
     public User registerUserInformation(String code, String fullname, String password, String managingType, String projectType

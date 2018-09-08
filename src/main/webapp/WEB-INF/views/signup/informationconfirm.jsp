@@ -92,7 +92,6 @@
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/> "></script>
 <script src="<c:url value="/resources/js/popper.min.js"/> "></script>
 <script src="<c:url value="/resources/js/bootstrap-material-design.js"/> "></script>
-<script src="<c:url value="/resources/js/bootstrap-material-design.js"/> "></script>
 <script src="<c:url value="/resources/js/jquery.steps.min.js"/> "></script>
 <script src="<c:url value="/resources/js/jquery.validate.min.js"/> "></script>
 <script>$(document).ready(function () {
@@ -128,7 +127,6 @@
             onFinished: function (event, currentIndex)
             {
                 form.submit();
-                alert("Submitted!");
             }
         });
 

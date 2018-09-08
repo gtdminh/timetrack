@@ -26,6 +26,9 @@
 <form action="<c:url value="/auth/login?${_csrf.parameterName}=${_csrf.token} " />" name="loginForm" class="form-signin" method="post">
     <img src="/resources/img/logo.png" alt="" class="mb-4">
     <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+    <div class="result-message">
+        ${message}
+    </div>
     <div class="form-group">
         <label for="inputUsername" class="sr-only">UserName</label>
         <input type="username" class="form-control" placeholder="Username" id="inputUsername" name="username" required
@@ -40,6 +43,7 @@
         <input type="checkbox" class="form-check-input" id="rememberCheckbox" value="remember-me">
         <label for="rememberCheckbox" class="form-check-label">Remember Me</label>
     </div>
+
     <div>
         <a href="/auth/password-recovery">Forgot Password?</a>
     </div>

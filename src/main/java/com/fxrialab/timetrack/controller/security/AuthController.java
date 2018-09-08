@@ -1,7 +1,5 @@
 package com.fxrialab.timetrack.controller.security;
 
-import com.fxrialab.timetrack.common.ResponseCode;
-import com.fxrialab.timetrack.common.RestResponse;
 import com.fxrialab.timetrack.common.ServiceException;
 import com.fxrialab.timetrack.model.security.User;
 import com.fxrialab.timetrack.service.intf.MailService;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,14 +44,14 @@ public class AuthController {
     }
 
 
-    @GetMapping("/salt/{username}")
+    @GetMapping("/salt/{username:.+}")
     @ResponseBody
     public Map<String, Object> getSalt(@PathVariable("username") String username)
     {
         HashMap<String, Object> map = new HashMap<>();
         map.put("length", 256);
         map.put("iteration",1000);
-        map.put("algorithm","Pbkdf2WithSha1");
+        map.put("algorithm","nl");
 
         User user = userService.findByUsernameOrEmail(username);
         if(user != null){
@@ -91,7 +87,7 @@ public class AuthController {
         try{
             String captchaResponse = request.getParameter("g-recaptcha-response");
             if (captchaService.processResponse(captchaResponse)){
-                //User newUser = userService.registerNewUser(email);
+                User newUser = userService.registerNewUser(email);
                 mailService.sendRegisterConfirmationEmail(email,new User());
                 mav.setViewName("/signup/inputemailconfirm");
             }
@@ -133,16 +129,18 @@ public class AuthController {
     @GetMapping("/do-activation/{activationcode}")
     public ModelAndView registerConfirm(@PathVariable("activationcode") String activationCode){
         ModelAndView model = new ModelAndView();
-        model.setViewName("signup/informationconfirm");
+
         model.addObject("activationCode",activationCode);
         try{
             User user = userService.checkUserWithActivationCode(activationCode);
             model.addObject("code","OK");
             model.addObject("userstatus",user.getStatus());
             model.addObject("message","");
+            model.setViewName("signup/informationconfirm");
         }
         catch (ServiceException ex){
             model.addObject("code","FAIL");
+            model.setViewName("login");
             switch (ex.getExceptionCode()){
                 case NO_CONFIRMATION_CODE:
                 case NO_WAITING_FOR_CONFIRMATION:
@@ -157,11 +155,11 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/information-submit/{activationcode}",
-            method = RequestMethod.POST, produces = "application/json")
-    @ResponseBody
-    public RestResponse informationSubmit(@PathVariable("activationcode") String activationCode, HttpServletRequest request) {
-
+            method = RequestMethod.POST, produces = "text/html")
+    public ModelAndView informationSubmit(@PathVariable("activationcode") String activationCode, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
         try{
+
             String managingType = request.getParameter("managingtype");
             String projectType = request.getParameter("projecttype");
             String fullname = request.getParameter("fullname");
@@ -170,20 +168,23 @@ public class AuthController {
             String companySize = request.getParameter("companysize");
             User newUser = userService.registerUserInformation(activationCode,fullname, password, managingType, projectType
             ,companyName, companySize);
+            mav.setViewName("redirect:/auth/login");
         }
         catch (ServiceException ex){
+            mav.addObject("code","FAIL");
+            mav.setViewName("login");
             switch (ex.getExceptionCode()){
                 case NO_CONFIRMATION_CODE:
                 case NO_WAITING_FOR_CONFIRMATION:
-                    return new RestResponse(ResponseCode.NO_LEGAL_ACTIVATION_CODE);
+                    mav.addObject("message","There is no account for activation!");
                 case USER_HAS_BEEN_ACTIVATED:
-                    return new RestResponse(ResponseCode.USER_HAS_BEEN_ACTIVATED);
+                    mav.addObject("message","Your account has been activated!");
                 case INVALID_CREATE_PASSWORD:
-                    return new RestResponse(ResponseCode.UNEXPECTED_CREATING_USER_ISSUE);
+                    mav.addObject("message","Can not create password!");
             }
         }
 
-        return new RestResponse(ResponseCode.SUCCESS);
+        return mav;
     }
 
 }
