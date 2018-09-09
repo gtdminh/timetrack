@@ -30,7 +30,7 @@ public class SecurityUtils {
         return passwordEncoder.createHash(password, salt);
     }
 
-    public static String generateSalt(){
+    public static String generateSalt() throws NoSuchAlgorithmException {
         return passwordEncoder.generateSalt();
     }
 

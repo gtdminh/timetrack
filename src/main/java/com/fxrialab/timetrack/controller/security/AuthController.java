@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,8 +47,7 @@ public class AuthController {
 
     @GetMapping("/salt/{username:.+}")
     @ResponseBody
-    public Map<String, Object> getSalt(@PathVariable("username") String username)
-    {
+    public Map<String, Object> getSalt(@PathVariable("username") String username) throws NoSuchAlgorithmException {
         HashMap<String, Object> map = new HashMap<>();
         map.put("length", 256);
         map.put("iteration",1000);

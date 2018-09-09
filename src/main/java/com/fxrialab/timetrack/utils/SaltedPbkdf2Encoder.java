@@ -1,72 +1,71 @@
 package com.fxrialab.timetrack.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
+import org.apache.log4j.Logger;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.util.EncodingUtils;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 
 /**
  * Created by Minh T. on 6/14/2018.
  */
 public class SaltedPbkdf2Encoder implements PasswordEncoder {
-    private static Logger logger = LoggerFactory.getLogger(SaltedPbkdf2Encoder.class);
+    private static Logger logger = Logger.getLogger(SaltedPbkdf2Encoder.class);
+    private static String saltChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&-=!";
+    //private String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
+    private static final int ITERATION = 1000;
+    private static final int HASH_LENGTH = 256;
+    private static final int SALT_LENGTH = 16;
 
-    private String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
-    private final int ITERATION = 1000;
-    private final int HASH_LENGTH =  256;
-    private final int SALT_LENGTH = 24;
-
-    private byte[] pbkdf2(char[] chars, byte[] salt, int iteration, int length) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        PBEKeySpec spec = new PBEKeySpec(chars, salt, iteration, length);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance(HASH_ALGORITHM);
-        return factory.generateSecret(spec).getEncoded();
+    private byte[] pbkdf2(byte[] chars, byte[] salt, int iteration, int length) {
+        PBKDF2 provider = new PBKDF2();
+        return provider.generateDerivedKey(length, chars, salt, iteration);
     }
 
-    private boolean byteArratEqual(byte[] a, byte[] b){
+    private boolean byteArrayEqual(byte[] a, byte[] b) {
         int diff = a.length ^ b.length;
-        for(short i=0; i < a.length && i < b.length; i++){
+        for (short i = 0; i < a.length && i < b.length; i++) {
             diff |= a[i] ^ b[i];
         }
 
         return diff == 0;
     }
 
-    public String createHash(String password, String salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        byte[] bytes = salt.getBytes();
+    public String createHash(String password, String salt) {
+        byte[] bytes = salt.getBytes(StandardCharsets.UTF_8);
 
-        byte[] hash  = pbkdf2(password.toCharArray(), bytes, ITERATION, HASH_LENGTH);
+        byte[] hash = pbkdf2(password.getBytes(StandardCharsets.UTF_8), bytes, ITERATION, HASH_LENGTH);
 
-        return String.format("%d:%s:%s",ITERATION,String.valueOf(Hex.encode(bytes)), String.valueOf(Hex.encode(hash)) );
+        return String.format("%d:%s:%s", ITERATION, salt, String.valueOf(Hex.encode(hash)).toUpperCase());
     }
 
-    public String generateSalt()
-    {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[SALT_LENGTH];
-        random.nextBytes(bytes);
+    public String generateSalt() throws NoSuchAlgorithmException {
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        char[] chars = new char[SALT_LENGTH];
+        int seed = random.nextInt(saltChars.length());
+        for(int i=0; i < chars.length; i++){
+            chars[i] = saltChars.charAt(seed);
+            seed = random.nextInt(saltChars.length());
+        }
 
-        return new String(bytes, StandardCharsets.UTF_8);
+        return new String(chars);
     }
 
     @Override
     public String encode(CharSequence rawPassword) {
-        String salt = generateSalt();
+        String salt = null;
+        try {
+            salt = generateSalt();
+        } catch (NoSuchAlgorithmException e) {
+            logger.error(e);
+        }
 
         try {
             return createHash(rawPassword.toString(), salt);
-        } catch (InvalidKeySpecException e) {
-            logger.error(Marker.ANY_MARKER, e);
-        } catch (NoSuchAlgorithmException e) {
-            logger.error(Marker.ANY_MARKER, e);
+        } catch (Exception e) {
+            logger.error(e);
         }
 
         return null;
@@ -76,27 +75,24 @@ public class SaltedPbkdf2Encoder implements PasswordEncoder {
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         String[] parts = encodedPassword.split(":");
         int iteration = Integer.valueOf(parts[0]);
-        byte[] salt   = Hex.decode(parts[1]);
-        byte[] hash   = Hex.decode(parts[2]);
+        byte[] salt = Hex.decode(parts[1]);
+        byte[] hash = Hex.decode(parts[2]);
         try {
-            byte[] testHash = pbkdf2(rawPassword.toString().toCharArray(), salt, iteration, hash.length);
-            return byteArratEqual(testHash, hash);
-        } catch (NoSuchAlgorithmException e) {
-            logger.error(Marker.ANY_MARKER, e);
-        } catch (InvalidKeySpecException e) {
-            logger.error(Marker.ANY_MARKER, e);
+            byte[] testHash = pbkdf2(rawPassword.toString().getBytes(), salt, iteration, hash.length);
+            return byteArrayEqual(testHash, hash);
+        } catch (Exception e) {
+            logger.error(e);
         }
-        return  false;
+        return false;
     }
 
-    public boolean matches(String hashedPassword, String encodedPassword)
-    {
+    public boolean matches(String hashedPassword, String encodedPassword) {
         String[] parts = encodedPassword.split(":");
         //int iteration = Integer.valueOf(parts[0]);
         //byte[] salt   = Hex.decode(parts[1]);
-        byte[] hash   = Hex.decode(parts[2]);
+        byte[] hash = Hex.decode(parts[2]);
         byte[] testHash = Hex.decode(hashedPassword);
 
-        return byteArratEqual(testHash, hash);
+        return byteArrayEqual(testHash, hash);
     }
 }
