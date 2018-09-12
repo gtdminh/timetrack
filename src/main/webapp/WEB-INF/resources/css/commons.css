@@ -1,47 +1,47 @@
-body{
-    min-height: 75rem;
-    margin-top: 4.5rem;
-}
+/*body{*/
+    /*min-height: 75rem;*/
+    /*margin-top: 4.5rem;*/
+/*}*/
 
-.time-navbar {
-    background-color: #e3f2fd;
-}
+/*.time-navbar {*/
+    /*background-color: #e3f2fd;*/
+/*}*/
 
-.time-logo {
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-}
+/*.time-logo {*/
+    /*width: 24px;*/
+    /*height: 24px;*/
+    /*vertical-align: middle;*/
+/*}*/
 
-.time-brand{
-    font-family: "Montserrat";
-    font-size: 2rem;
-    color: #1761a0;
-}
+/*.time-brand{*/
+    /*font-family: "Montserrat";*/
+    /*font-size: 2rem;*/
+    /*color: #1761a0;*/
+/*}*/
 
-.navbar-brand span{
-    display: inline-block;
-    vertical-align: middle;
-}
+/*.navbar-brand span{*/
+    /*display: inline-block;*/
+    /*vertical-align: middle;*/
+/*}*/
 
-.navbar-nav{
-    margin-left: auto;
-}
+/*.navbar-nav{*/
+    /*margin-left: auto;*/
+/*}*/
 
-#sidebar-wrapper
-{
-    z-index: 1;
-    width:0;
-    height:100%;
-    position: absolute;
-}
+/*#sidebar-wrapper*/
+/*{*/
+    /*z-index: 1;*/
+    /*width:0;*/
+    /*height:100%;*/
+    /*position: absolute;*/
+/*}*/
 
-.sidebar-nav
-{
+/*.sidebar-nav*/
+/*{*/
 
 
-}
+/*}*/
 
-app-root{
+/*app-root{*/
 
-}
+/*}*/
