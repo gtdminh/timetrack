@@ -1,7 +1,10 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<app-sidebar></app-sidebar>
-<div>
-  <timesheet>
+<app-navbar></app-navbar>
+<section class="section" style="margin: 0; padding: 0">
+  <div class="columns is-gapless" >
+    <app-sidebar [items]="items"></app-sidebar>
+    <div class="content">
+      <router-outlet class="container"></router-outlet>
+    </div>
+  </div>
+</section>
 
-  </timesheet>
-</div>

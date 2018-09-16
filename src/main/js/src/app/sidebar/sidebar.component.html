@@ -1,10 +1,10 @@
-<nav class="sidebar-wrapper">
-  <ul class="sidebar-nav">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
+<nav class="menu column is-4-tablet is-3-desktop is-1-widescreen sidebar sidebar-default" role="navigation">
+  <a class="button">
+      <span class="icon">
+        <i class="fas fa-bars"></i>
+      </span>
+  </a>
+  <ul class="menu-list" *ngFor="let item of items">
+    <app-sidebar-item [item]="item"></app-sidebar-item>
   </ul>
 </nav>

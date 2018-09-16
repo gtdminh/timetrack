@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -124,7 +124,7 @@
   "defaultProject": "timetrack",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "sass"
+      "styleext": "scss"
     }
   }
 }
