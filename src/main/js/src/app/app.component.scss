@@ -1,10 +1,10 @@
-html,
-body {
+.sidebar {
+  width: 150px !important;
+  min-width: 35px;
   height: 100%;
-  margin: 0;
-  padding: 0;
 }
 
-.wrapper {
-  height: 100%;
+.sidebar-default {
+  background-color: #4582eb;
 }
+

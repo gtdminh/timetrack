@@ -2,3 +2,15 @@
 @import "../node_modules/minireset.css/minireset";
 
 @import "styles/helpers";
+@import "styles/view";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  height: 100%;
+}

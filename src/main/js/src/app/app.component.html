@@ -1,9 +1,11 @@
-<app-navbar></app-navbar>
-<section class="section" style="margin: 0; padding: 0">
-  <div class="columns is-gapless" >
-    <app-sidebar [items]="items"></app-sidebar>
-    <div class="content">
-      <router-outlet class="container"></router-outlet>
+<section class="hero is-fullheight is-fullwidth">
+  <div class="hero-head">
+    <app-navbar></app-navbar>
+  </div>
+  <div class="hero-body is-fullwidth" style="margin: 0;padding: 0;align-items: normal !important;">
+    <div class="columns is-gapless is-fullheight is-fullwidth" >
+      <app-sidebar [items]="items"></app-sidebar>
+      <router-outlet ></router-outlet>
     </div>
   </div>
 </section>
