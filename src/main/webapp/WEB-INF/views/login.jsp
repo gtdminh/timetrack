@@ -57,13 +57,8 @@
 
 </form>
 
-<script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/> "></script>
-<script src="<c:url value="/resources/js/popper.min.js"/> "></script>
-<script src="<c:url value="/resources/js/bootstrap-material-design.js"/> "></script>
+<script src="<c:url value="/resources/js/jquery-3.2.1.slim.min.js"/> "></script>
 <script src="<c:url value="/resources/js/forge.min.js"/> "></script>
-<script>$(document).ready(function () {
-    $('body').bootstrapMaterialDesign();
-});</script>
 <script>
     $(function () {
         debugger;
