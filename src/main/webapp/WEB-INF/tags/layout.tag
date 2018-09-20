@@ -3,7 +3,8 @@
 <%@attribute name="title" type="java.lang.String" required="true" %>
 <%@attribute name="css" type="java.lang.String" required="false" %>
 
-<html class="has-navbar-fixed-top">
+<%--<html class="has-navbar-fixed-top">--%>
+<html>
 <head>
     <title>Time-Tick - ${title}</title>
     <meta charset="utf-8">
@@ -15,10 +16,24 @@
     <%--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">--%>
     <%-- bootstrap core --%>
     <%--<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-material-design.min.css" />" type="text/css"/>--%>
-    <link rel="stylesheet" href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />"
+    <link rel="stylesheet" href="<c:url value="/resources/css/bulma.min.css" />"
           type="text/css"/>
 
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="<c:url value="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />"
+          type="text/css"/>
+
+    <link rel="stylesheet" href="<c:url value="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>"
+          type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/hero.css" />"
+          type="text/css"/>
+
+    <link rel="stylesheet" href="<c:url value="https://fonts.googleapis.com/css?family=Open+Sans" />"
+          type="text/css"/>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+            integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB"
+            crossorigin="anonymous"></script>
 
     <c:if test="${css != null}">
         <link href="<c:url value="${css}"/>" rel="stylesheet" type="text/css"/>
